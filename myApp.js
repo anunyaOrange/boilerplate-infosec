@@ -1,6 +1,19 @@
 const express = require('express');
 const app = express();
+const helmet = require('helmet');
 
+app.use(helmet.hidePoweredBy());
+app.use(helmet.frameguard({ action: 'deny' }));
+
+
+app.use('/public', express.static('public'));
+
+
+
+
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/views/index.html');
+});
 
 
 

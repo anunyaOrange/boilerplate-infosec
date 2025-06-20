@@ -6,6 +6,32 @@ app.use(helmet.hidePoweredBy());
 app.use(helmet.frameguard({ action: 'deny' }));
 app.use(helmet.xssFilter());
 app.use(helmet.noSniff());
+app.use(helmet.ieNoOpen());
+app.use(helmet.hsts({
+  maxAge: 90*24*60*60, // 90 days // 31536000, // 1 year
+  includeSubDomains: true,
+  preload: true
+}));
+app.use(helmet.dnsPrefetchControl());
+
+
+// app.use(helmet.contentSecurityPolicy({
+//   directives: {
+//     defaultSrc: ["'self'"],
+//     scriptSrc: ["'self'", "'unsafe-inline'"],
+//     styleSrc: ["'self'", "'unsafe-inline'"],
+//     imgSrc: ["'self'", 'data:', 'https:'],
+//     connectSrc: ["'self'"],
+//     fontSrc: ["'self'", 'https://fonts.gstatic.com'],
+//     objectSrc: ["'none'"],
+//     upgradeInsecureRequests: [],
+//   },
+//   reportOnly: false,
+//   setAllHeaders: false,
+//   disableAndroid: false,
+//   browserSniff: true,
+// }));
+
 
 app.use('/public', express.static('public'));
 

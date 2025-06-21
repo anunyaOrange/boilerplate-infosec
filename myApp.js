@@ -13,6 +13,7 @@ app.use(helmet.hsts({
   preload: true
 }));
 app.use(helmet.dnsPrefetchControl());
+app.use(helmet.noCache());
 
 
 // app.use(helmet.contentSecurityPolicy({

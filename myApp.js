@@ -8,13 +8,19 @@ app.use(helmet.xssFilter());
 app.use(helmet.noSniff());
 app.use(helmet.ieNoOpen());
 app.use(helmet.hsts({
-  maxAge: 90*24*60*60, // 90 days // 31536000, // 1 year
+  maxAge: 90 * 24 * 60 * 60, // 90 days // 31536000, // 1 year
   includeSubDomains: true,
   preload: true
 }));
 app.use(helmet.dnsPrefetchControl());
 app.use(helmet.noCache());
 
+app.use(helmet.contentSecurityPolicy({
+  directives: {
+    defaultSrc: ["'self'"],
+    scriptSrc: ["'self'", 'trusted-cdn.com']
+  }
+}));
 
 // app.use(helmet.contentSecurityPolicy({
 //   directives: {
@@ -25,7 +31,7 @@ app.use(helmet.noCache());
 //     connectSrc: ["'self'"],
 //     fontSrc: ["'self'", 'https://fonts.gstatic.com'],
 //     objectSrc: ["'none'"],
-//     upgradeInsecureRequests: [],
+//     upgradeInsecureRequests: false,
 //   },
 //   reportOnly: false,
 //   setAllHeaders: false,
